@@ -1,19 +1,15 @@
 const express = require('express');
 const app = express();
 
-const userRoute = require('./src/routes/user');
+const routes = require('./src/routes/index');
 
-// const loggingMiddleWare = (req, res, next) => {
-// 	console.log(`${req.method} -- ${req.url}`);
-// 	next();
-// };
 app.use(express.json());
-// app.use(loggingMiddleWare);
-app.use(userRoute);
+app.use(routes);
 
 const PORT = 3000;
 
 app.get('/', (req, res) => {
+	res.cookie('cookieData', 'awesome', { maxAge: 60000 });
 	res.send('hello world');
 });
 
