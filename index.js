@@ -1,15 +1,17 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const app = express();
 
 const routes = require('./src/routes/index');
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(routes);
 
 const PORT = 3000;
 
 app.get('/', (req, res) => {
-	res.cookie('cookieData', 'awesome', { maxAge: 60000 });
+	res.cookie('cookieData', 'awesome', { maxAge: 10000 });
 	res.send('hello world');
 });
 
