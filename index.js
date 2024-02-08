@@ -1,18 +1,31 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const session = require('express-session');
 const app = express();
 
 const routes = require('./src/routes/index');
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(
+	session({
+		secret: 'abc',
+		saveUninitialized: false,
+		resave: false,
+		cookie: {
+			maxAge: 60000 * 60,
+		},
+	}),
+);
 app.use(routes);
 
 const PORT = 3000;
 
 app.get('/', (req, res) => {
+	// console.log(req.session.id);
+	req.session.visited = true;
 	res.cookie('cookieData', 'awesome', { maxAge: 10000 });
-	res.send('hello world');
+	res.send('Home Page');
 });
 
 app.listen(PORT, () => {

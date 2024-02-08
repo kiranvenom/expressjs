@@ -4,6 +4,14 @@ const mockUser = require('../mockUser');
 const router = Router();
 
 router.get('/api/users', (req, res) => {
+	req.sessionStore.get(req.session.id, (err, data) => {
+		if (err) {
+			console.log(err);
+		}
+
+		console.log(data);
+	});
+
 	const { filter, value } = req.query;
 
 	if (filter && value)
